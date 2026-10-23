@@ -13,7 +13,7 @@ _Note: The `--index 1` puts that imagemagick buildpack first._
 
 ## Setting (or Changing) your ImageMagick version
 
-1. Go to https://www.imagemagick.org/download/releases and find the version number that you want (*.tar.gz).
+1. Go to https://github.com/ImageMagick/ImageMagick/tags and find the version number (tag name) that you want.
 2. Set the config on your app: `heroku config:set IMAGE_MAGICK_VERSION=6.9.13-16 -a HEROKU_APP_NAME`
 3. Redeploy your app to Heroku to trigger the install
 

@@ -29,12 +29,12 @@ CACHE_FILE="$CACHE_DIR/imagemagick-$IMAGE_MAGICK_VERSION.tar.gz"
 
 if [ ! -f $CACHE_FILE ]; then
   # install imagemagick
-  IMAGE_MAGICK_FILE="ImageMagick-$IMAGE_MAGICK_VERSION.tar.xz"
+  IMAGE_MAGICK_FILE="ImageMagick-$IMAGE_MAGICK_VERSION.tar.gz"
   IMAGE_MAGICK_DIR="ImageMagick-$IMAGE_MAGICK_VERSION"
-  IMAGE_MAGICK_URL="https://www.imagemagick.org/download/releases/$IMAGE_MAGICK_FILE"
+  IMAGE_MAGICK_URL="https://github.com/ImageMagick/ImageMagick/archive/refs/tags/$IMAGE_MAGICK_VERSION.tar.gz"
 
   echo "-----> Downloading ImageMagick from $IMAGE_MAGICK_URL"
-  wget $IMAGE_MAGICK_URL -P $BUILD_DIR | indent
+  curl -fsSL --retry 3 -o $BUILD_DIR/$IMAGE_MAGICK_FILE $IMAGE_MAGICK_URL | indent
 
   echo "-----> Extracting ImageMagick from $BUILD_DIR/$IMAGE_MAGICK_FILE"
   if [ ! -f $BUILD_DIR/$IMAGE_MAGICK_FILE ]; then
@@ -42,7 +42,8 @@ if [ ! -f $CACHE_FILE ]; then
     ls $BUILD_DIR | indent
     exit 1;
   fi
-  tar xvf $BUILD_DIR/$IMAGE_MAGICK_FILE | indent
+  tar xzf $BUILD_DIR/$IMAGE_MAGICK_FILE | indent
+  rm -f $BUILD_DIR/$IMAGE_MAGICK_FILE
 
   echo "-----> Building ImageMagick"
   cd $IMAGE_MAGICK_DIR
