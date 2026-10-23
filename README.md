@@ -25,5 +25,10 @@ Check out [the ImageMagick changelog](https://github.com/ImageMagick/Website6/bl
 
 If there is an issue with a bad build of ImageMagick getting stuck in the build cache, the following command will purge the cache and allow for a fresh build -- that first build will run much slower.
 
-1. `heroku plugins:install heroku-builds`
-2. `heroku builds:cache:purge -a HEROKU_APP_NAME`
+```
+curl -X DELETE https://api.heroku.com/apps/HEROKU_APP_NAME/build-cache \
+  -H "Accept: application/vnd.heroku+json; version=3" \
+  -H "Authorization: Bearer $(heroku auth:token)"
+```
+
+_Note: The `heroku-builds` plugin (`heroku builds:cache:purge`) is no longer maintained and cannot be installed on the current Heroku CLI, so the build cache is purged via the Heroku Platform API._
